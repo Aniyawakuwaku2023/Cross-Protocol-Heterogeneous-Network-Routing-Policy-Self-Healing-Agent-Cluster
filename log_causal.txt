@@ -1,0 +1,32 @@
+﻿
+======================================================================
+Demo 4: 因果推理引擎 - 故障传播分析
+======================================================================
+[Env] Link (0, 11) FAILED (Protocol: OTN)
+
+[Event] 链路 (0, 11) 发生故障
+
+[Causal Analysis] 发现 16 条因果链:
+  fault -> edge: traffic_redistribution (强度: 0.15)
+  fault -> node: increased_load (强度: 0.00)
+  fault -> edge: traffic_redistribution (强度: 0.15)
+  fault -> node: increased_load (强度: 0.00)
+  fault -> edge: traffic_redistribution (强度: 0.15)
+
+[Prediction] 预测 0 个潜在二次故障:
+
+[Reasoning Chain] 推理链解释:
+python : Traceback (most recent call last):
+所在位置 行:1 字符: 50
++ ... 090/PycharmProjects/PythonProject; python main.py causal 2>&1 | Out-F ...
++                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\13090\PycharmProjects\PythonProject\main.py", line 366, in <module>
+    demos[mode]()
+    ~~~~~~~~~~~^^
+  File "C:\Users\13090\PycharmProjects\PythonProject\main.py", line 153, in run_causal_reasoning_demo
+    print(f"  \u2022 {step}")
+    ~~~~~^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'gbk' codec can't encode character '\u2022' in position 2: illegal multibyte sequence

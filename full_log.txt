@@ -1,0 +1,103 @@
+﻿
+======================================================================
+跨协议异构网络路由策略自愈 Agent 集群系统
+核心特性: 黑板共享 | 因果推理 | 可解释验证
+======================================================================
+
+======================================================================
+Demo 1: 感知 Agent - 多模态风险检测
+======================================================================
+[Env] Link (0, 11) FAILED (Protocol: OTN)
+[Env] Node 5 congested (utilization: 0.92)
+
+[Result] 检测到 14 个风险模式:
+  [CRITICAL] LINK_FAILURE @ (0, 11)
+          指标: {'delay': 0.005250107552226669, 'protocol': 'OTN'}
+          置信度: 100.00%
+  [WARNING] DEGRADATION @ (0, 8)
+          指标: {'high_loss': 0.012196047993642264}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (0, 12)
+          指标: {'high_delay': 0.028962787899764537}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (1, 11)
+          指标: {'high_loss': 0.01486490394718254}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (1, 6)
+          指标: {'high_loss': 0.014386864888083547}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (1, 14)
+          指标: {'high_loss': 0.01725103669928779}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (2, 12)
+          指标: {'high_loss': 0.013987405645196679}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (4, 12)
+          指标: {'high_loss': 0.012087125573967468}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (4, 8)
+          指标: {'high_delay': 0.025190525873529292}
+          置信度: 30.00%
+  [WARNING] DEGRADATION @ (5, 12)
+          指标: {'high_delay': 0.04626238093088893, 'congestion': 0.92}
+          置信度: 55.00%
+  [CRITICAL] DEGRADATION @ (5, 13)
+          指标: {'high_delay': 0.026905072764730587, 'high_loss': 0.019450489174658744, 'congestion': 0.92}
+          置信度: 85.00%
+  [WARNING] DEGRADATION @ (6, 11)
+          指标: {'high_loss': 0.01547728178198923}
+          置信度: 30.00%
+  [CRITICAL] DEGRADATION @ (8, 14)
+          指标: {'high_delay': 0.025787580602392515, 'high_loss': 0.015793903093980606}
+          置信度: 60.00%
+  [WARNING] DEGRADATION @ (10, 13)
+          指标: {'high_loss': 0.01958170537986935}
+          置信度: 30.00%
+
+======================================================================
+Demo 2: 推理 Agent - 长链路径搜索
+======================================================================
+[Env] Link (0, 8) FAILED (Protocol: MPLS)
+[Env] Link (2, 18) FAILED (Protocol: Optical)
+
+[Task] 寻找最优路径 0 -> 15
+[Constraint] 业务权重: 0.9 (高优先级)
+[Result] 未找到有效路径
+
+======================================================================
+Demo 3: 验证 Agent - 可解释闭环验证
+======================================================================
+
+[Test 1] 有效路径验证:
+
+[Validator-Demo] [PASS] 验证通过
+  结果: PASS
+  评分: 1.00
+
+[Test 2] 环路检测 (带环路的路径):
+python : Traceback (most recent call last):
+所在位置 行:1 字符: 50
++ ... 13090/PycharmProjects/PythonProject; python main.py full 2>&1 | Out-F ...
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\13090\PycharmProjects\PythonProject\main.py", line 359, in <module>
+    run_validator_demo()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\13090\PycharmProjects\PythonProject\main.py", line 103, in run_validator_demo
+    result = validator.validate(loop_strategy, env.get_topology())
+  File "C:\Users\13090\PycharmProjects\PythonProject\agents\cluster.py", line 628, in validate
+    detailed_checks['protocol_compatible'] = self._check_protocol_compatibility(
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        strategy.path, graph
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\13090\PycharmProjects\PythonProject\agents\cluster.py", line 714, in _check_protocol_compatibility
+    prev_protocol = graph[path[i-1]][path[i]].get('protocol', '')
+                    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "F:\python\Lib\site-packages\networkx\classes\coreviews.py", line 54, in __getitem__
+    return self._atlas[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 1
